@@ -1,7 +1,14 @@
 import { map, addCable, toggleCable, toggleMarkers, updateFeatures, createFeatures, removeCable, removeHotline, removeMarkers, toggleSatellite, clearMarkers } from "./components/mapHandler.mjs"
 import { detectStopRealtime, fetchDisplay, stopQuery } from "./components/dataHandler.mjs"
 import { stopAnimation, getTimeOut, clearDateTime } from "./components/plotHandler.mjs";
-import { decimateObject } from "./components/tools.mjs"
+import { decimateObject, startDAS, stopDAS } from "./components/tools.mjs"
+/*
+===============================================================
+  DAS
+===============================================================
+*/
+$("button.startDAS").on("click", function() {startDAS();});
+$("button.stopDAS").on("click", function() {stopDAS();});
 /*
 ===============================================================
   General

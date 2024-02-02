@@ -1,3 +1,26 @@
+**architecture**
+
+```
+SERVER
+│
+├── backend
+│   ├── app.py
+│   ├── interrogatorProducer.py
+│   ├── requirements.txt
+│   └── VM_data.h5
+│
+├── front
+│   ├── assets
+│   ├── actionScript.js
+│   ├── interrogator.css
+│   └── interrogator.html
+│
+├── docker-compose.yml
+└── README.md
+```
+
+
+**Danilo read me**
 There are three applications: Kafka-broker, backend and front-end. The first program to run is the broker, it should be running when the backend start, once that
 the back-end process will connect with the broker.
 

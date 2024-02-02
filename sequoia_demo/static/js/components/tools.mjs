@@ -1,3 +1,50 @@
+// COMMUNICATION WITH KAFKA
+
+// Function to start the DAS
+function startDAS() {
+    fetch('http://localhost:5000/startDAS', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // You can include additional data in the body if needed
+      body: JSON.stringify({}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Response from server:', data);
+      // Handle the response as needed
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle errors
+    });
+  }
+  
+  // Function to stop the DAS
+  function stopDAS() {
+    fetch('http://localhost:5000/stopDAS', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // You can include additional data in the body if needed
+      body: JSON.stringify({}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Response from server:', data);
+      // Handle the response as needed
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle errors
+    });
+  }
+  
+
+
+// DATA DOWNSAMPLING FOR VIEW
 
 function decimateObject(obj, decimation) {
     const result = {};
@@ -30,6 +77,6 @@ function decimateObject(obj, decimation) {
 }
 
 export { 
-    decimateObject
+    decimateObject, startDAS, stopDAS
 };
 
