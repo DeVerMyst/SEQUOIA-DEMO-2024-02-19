@@ -1,0 +1,149 @@
+
+div.menu {
+  position: absolute;
+  display: block;
+  top: 10px;
+  right: 20px;
+  z-index: 500;
+  max-width: 450px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  max-height: 935px; 
+  overflow-y: scroll;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+div.menu-options {
+  display: none;
+  width: 100%;
+}
+
+div.menu-options.active {
+  display: block;
+}
+
+div.leaflet-popup-pane h3 {
+  font-size: 1.2rem;
+}
+
+div.leaflet-popup-pane label, div.leaflet-popup-pane #reason {
+  font-size: 1.0em;
+}
+
+.input-group-texte {
+  display: flex;
+  align-items: center;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+}
+
+.input-group-textee {
+  display: flex;
+  align-items: center;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+}
+
+
+
+
+/*
+===============================================================
+  Slider
+===============================================================
+*/
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  div.menu {
+    max-width: 300px;
+    font-size: 0.8em;
+  }
+}
+
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #888;
+  color: #fff;
+  cursor: pointer;
+}
+
+.tooltip .tooltip-content {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px;
+  background-color: #888;
+  color: black;
+  border-radius: 5px;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.tooltip:hover .tooltip-content {
+  visibility: visible;
+}

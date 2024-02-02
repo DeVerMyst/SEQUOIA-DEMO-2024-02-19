@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script type="text/javascript">
+
+  // Passer les données au script principal (main.js)
+  python_array_coordinates = {{ array_coordinates | tojson | safe }};
+  python_sensors = {{ sensors | tojson | safe }};
+  python_result = {{ result | tojson | safe }};
+
+  var arrayCoordinates = python_array_coordinates;
+  var sensors = python_sensors;
+  var result = python_result;
+</script>
+
+
+<!-- <div id="map" style="height:100vh;width:100%">toto</div> -->
+<div id="map">toto</div>
+
+<!-- see TMP_OLD -->
+<!-- End menu -->
+<div class="menu">
+
+  <!-- Main menu options: Setup | Calibration | Analysis -->
+  <div class="mb-4">
+    <!-- ANTONY FOR DEMO ======= Remove buttons -->
+    <button class="btn btn-danger mx-3 btn-sm" id="clear-button" type="button">Clear map</button>
+  </div>
+
+  <div class="row input-group">
+    <span class="input-group-text" style="width: 130px;">Channel range</span>
+    <input type="number" class="form-control" id="startchanalysis" value="750">
+    <input type="number" class="form-control" id="endchanalysis" value="1000">
+  </div>
+
+  <div class="row mb-2 text-center">
+    <div class="space">
+      <input class="sw" id="show-cable" type="checkbox" data-toggle="switchbutton"
+      data-onlabel="cable" data-offlabel="cable" data-onstyle="success"
+      data-width="100">
+    </div>
+    <div class="space">
+      <input class="sw" id="show-satellite" type="checkbox" data-toggle="switchbutton"
+      data-onlabel="satellite" data-offlabel="satellite" data-onstyle="success"
+      data-width="100">
+      <div class="space">
+    </div>
+      <input class="sw" id="show-markers" type="checkbox" data-toggle="switchbutton"
+      data-onlabel="markers" data-offlabel="markers" data-onstyle="success"
+      data-width="100">
+    </div>
+  </div>  
+
+
+</div>
+
+
+{% endblock %}

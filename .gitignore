@@ -1,0 +1,5 @@
+.flask_app
+__pycache__
+.DS_STORE
+app.log
+tmp*

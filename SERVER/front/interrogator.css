@@ -1,0 +1,68 @@
+body{ 
+    min-height: 100vh; 
+    margin: 0; 
+    
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  
+  header{ 
+    min-height:50px;
+  }
+  
+  footer{ 
+    min-height:50px; 
+    background-color: #212529;
+    color: white;
+  }
+
+.card {
+    position: relative !important;
+    margin-left: auto !important;
+    margin-right: auto;
+}
+
+.container-red {
+    position: absolute;
+    left: 90px;
+    top: 145px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.container-green {
+    position: absolute;
+    left: 90px;
+    top: 120px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.lights {
+    background-color: black;
+    border-radius: 100%;
+    width: 17px;
+    height: 17px;
+    margin-right: 5px;
+}
+
+.btn {
+    width: 40px;
+    height: auto;
+    font-size: 10px;
+    padding: 1px;
+    position: absolute;
+}
+
+.start {
+    top: 200px;
+    left: 140px;
+}
+
+.stop {
+    top: 200px;
+    left: 90px;
+}
+  

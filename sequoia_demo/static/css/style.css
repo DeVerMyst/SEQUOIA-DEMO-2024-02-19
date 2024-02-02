@@ -1,0 +1,94 @@
+body {
+    margin-bottom: 100px; /* Hauteur du footer */
+    font-family: 'Roboto', sans-serif;
+    color: #333; /* Couleur du texte principale */
+    background-color: #f5f5f5; /* Couleur de fond principale */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #004d40; /* Couleur du texte des titres */
+}
+
+.theme_sia {
+    background-color: rgba(255, 255, 255, 0.8); /* Couleur du fond avec transparence */
+}
+.text_sia {
+    font-family: 'Roboto', sans-serif;
+    color: #333; /* Couleur du texte principale */
+}
+.navbar-brand {
+    color: #fff; /* Couleur du texte du logo */
+}
+
+.navbar-nav .nav-link {
+    color: #fff; /* Couleur du texte des liens de navigation */
+}
+
+.not_activate {
+    display: none;
+}
+
+/* header, footer {
+    position: fixed;
+    width: 100%;
+    background-color: #388e3c; 
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+} */
+
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* 100% de la hauteur de la vue */
+    overflow: hidden;
+    position: relative; /* Position relative pour que les éléments enfants soient positionnés par rapport à lui */
+  }
+  
+  header, footer {
+    position: absolute;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  header {
+    top: 0;
+    z-index: 1;
+    border-bottom: 2px solid #2e7d32; /* Bordure inférieure de la barre de navigation */
+    padding: 0%;
+  }
+  
+  footer {
+    bottom: 0;
+    border-top: 2px solid #2e7d32; /* Bordure inférieure de la barre de navigation */
+  }
+  
+  #map {
+    height: 100%; /* Utilise toute la hauteur disponible */
+    width: 100%; /* Utilise toute la largeur disponible */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Assurez-vous que la carte est derrière les éléments header et footer */
+  }
+  
+
+.menu{
+    position:static;
+    top: 20% !important;
+    left:2%;
+    right:0%;
+    overflow-y:hidden !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    
+}
+
+.space{
+    margin: 2%;
+}
+  
+  
