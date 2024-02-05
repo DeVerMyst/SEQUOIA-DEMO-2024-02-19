@@ -1,3 +1,6 @@
+# TO DO 
+**DOCKER-COMPOSE TO LAUNCH FULL APP**
+
 # Steps
 1. launch Kafka docker-compose image
 2. launch API-Server --> SERVER/app.py

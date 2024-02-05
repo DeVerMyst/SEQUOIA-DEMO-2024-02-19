@@ -40,39 +40,40 @@
     <script
         src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <title>{% block title %}sequoIA Analytics{% endblock %}</title>
 </head>
 
 <body>
-    <header class="theme_sia ">
+    <header class="theme_sia">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <img src="./static/img/logo_sequoia.png" alt="Logo Sequoia" width="12%">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav ">
-                        <li class="nav-item">
-                            <button id="startDAS">Start DAS</button>                            
-                        </li>
-                        <li class="nav-item">
-                            <button id="stopDAS">Stop DAS</button>
-                        </li>
-                        <li class="nav-item">
-                            <!-- <input class="sw" id="show-satellite" type="checkbox" data-toggle="switchbutton"
-                                data-onlabel="Toggle satellite" data-offlabel="Toggle satellite" data-onstyle="success"
-                                data-width="150"> -->
-                        </li>
-                        <!-- Ajoutez d'autres liens de menu au besoin -->
-                    </ul>
-                </div>
+                <!-- Logo -->
+                <img src="./static/img/logo_sequoia.png" alt="Logo Sequoia" width="20%">
+    
+                <!-- Bouton ON/OFF -->
+                
+    
+                <!-- Items du menu -->
+                <ul class="navbar-nav mx-auto align-items-center">
+                    <li class="nav-item">
+                        item 1
+                    </li>
+                    <li class="nav-item">
+                        item 2
+                    </li>
+                    <li class="nav-item">
+                        <button id="powerButton" class="toggle-button">ON</button>
+                    </li>
+                    <!-- Ajoutez d'autres liens de menu au besoin -->
+                </ul>
             </nav>
         </div>
     </header>
+    
+    
+        
 
     <main>
         {% block content %}{% endblock %}
@@ -112,6 +113,7 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="module" src="./static/js/main.js"></script>
     <script src="https://npmcdn.com/leaflet-geometryutil"></script>
+    
 
 </body>
 

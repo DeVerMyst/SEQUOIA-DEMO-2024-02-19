@@ -1,5 +1,24 @@
 // COMMUNICATION WITH KAFKA
+    // Attach click event to the power button
+    $("#powerButton").on("click", function() {
+      toggleDAS();
+  });
 
+// Function to toggle DAS state
+function toggleDAS() {
+  // Check if DAS is currently ON or OFF
+  const isDASOn = $("#powerButton").hasClass("active");
+
+  if (isDASOn) {
+      // DAS is currently ON, turn it OFF
+      stopDAS();
+      $("#powerButton").removeClass("active").text("ON");
+  } else {
+      // DAS is currently OFF, turn it ON
+      startDAS();
+      $("#powerButton").addClass("active").text("OFF");
+  }
+}
 // Function to start the DAS
 function startDAS() {
     console.log("start")
