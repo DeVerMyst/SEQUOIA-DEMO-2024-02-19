@@ -9,7 +9,7 @@
 `python -m venv .flask_app`
 
 (linux/mac os)
-`source .flask_app/bin/activate `
+`source .flask_app/bin/activate`
 
 **upgrade pip**
 `pip install --upgrade pip`
@@ -29,7 +29,7 @@ SEQUOIA-DEMO-2024-02-19/
 ├── sequoia_demo/
 │   ├── __init__.py
 │   ├── routes.py
-│   ├── components/
+│   └── components/
 │       ├── __init__.py
 │       ├── logging_utils.py
 │       ├── sensors_utils.py
@@ -42,11 +42,12 @@ SEQUOIA-DEMO-2024-02-19/
 │       │   ├── *.css
 │       │   └── style.css
 │       ├── data/
-│           └── sensors.json
+│       │   └── sensors.json
 │       ├── js/
 │       │   ├── *.js
 │       │   ├── main.js
 │       │   └── components/
+│               ├── tools.js
 │       │       └── *.mjs
 │       └── img/
 │           └── logo.png
