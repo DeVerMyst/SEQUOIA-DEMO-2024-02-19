@@ -3,6 +3,12 @@ from json import loads
 from kafka import KafkaConsumer
 
 TOPIC_RECEIVE = "RawDAS"
+socketio = None
+
+
+def init_socketio(sio):
+    global socketio
+    socketio = sio
 
 
 def read_kafka(host):
@@ -20,5 +26,12 @@ def read_kafka(host):
             for message in consumer:
                 batch_das = message.value["array"]
                 print(batch_das)
+                # Envoyer les données au frontend
+                send_data_to_frontend(batch_das)
     except ConnectionRefusedError:
         logging.error(" # [admin] Connection Error to the Kafka pipeline")
+
+
+def send_data_to_frontend(data):
+    # Envoyer les données au frontend via la WebSocket
+    socketio.emit('data_update', data)

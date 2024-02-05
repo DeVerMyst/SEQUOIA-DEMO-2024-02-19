@@ -1,11 +1,16 @@
-from flask import render_template
-from flask import jsonify
+from flask import render_template, jsonify
 from sequoia_demo import app
 from sequoia_demo.components.logging_utils import logging
 from sequoia_demo.components.sensors_utils import config_sensors
-from sequoia_demo.components.kafka_utils import read_kafka
+from sequoia_demo.components.kafka_utils import read_kafka, init_socketio
+from flask_socketio import SocketIO
+
 import config as config
 import json
+
+# Initialisation de Flask-SocketIO
+socketio = SocketIO(app)
+init_socketio(socketio)  # Initialisez le socketio dans kafka_utils.py
 
 # kafka host
 host = config.KAFKA_HOST
@@ -27,23 +32,46 @@ def index():
                            result=data)
 
 
-# @app.route("/api/sensors")
-# def get_sensor_data():
-#     # Chargez les données depuis le fichier JSON (sensors.json)
-#     with open(config.CALIBRATION_PATH) as f:
-#         data = json.load(f)
+@app.route("/api/sensors")
+def get_sensor_data():
+    # Chargez les données depuis le fichier JSON (sensors.json)
+    with open(config.CALIBRATION_PATH) as f:
+        data = json.load(f)
 
-#     # data = array_coordinates.tolist()
-#     print("Data:", data)
-
-#     return jsonify(data["sensors"])
+    return jsonify(data["sensors"])
 
 
 @app.route("/readDAS", methods=["POST"])
-def start_das():
-    # Exécutez votre script Python pour lire les données
-    process = read_kafka(host)
-    result = process.stdout
+def readDAS():
+    print("="*50)
+    print("# [admin] routes read data")
+    print("="*50)
 
+    # # Exécutez votre script Python pour lire les données
+    # process = read_kafka(host)
+    # result = process.stdout
+    # print(result)
+    # # Vous pouvez retourner des données au client si nécessaire
+    # return {"status": "Started", "result": result}
+
+
+@app.route("/dontreadDAS", methods=["POST"])
+def dontreadDAS():
+    print("# [admin] routes dont read data")
     # Vous pouvez retourner des données au client si nécessaire
-    return {"status": "Started", "result": result}
+    return {"status": "nothing", "result": 200}
+
+
+# Route pour la WebSocket
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True, port=5050)
