@@ -78,6 +78,14 @@ footer {
 }
 
 /* MENU STYLES */
+.mycontainer{
+    padding: 0% !important;
+}
+
+.navbar{
+    padding:0.5rem;
+}
+
 .menu {
     position: static;
     top: 20% !important;

@@ -21,6 +21,7 @@ function toggleDAS() {
 }
 // Function to start the DAS
 function startDAS() {
+  // Start the DAS from API of SERVER (backend folder)
     console.log("start")
     fetch('http://localhost:5000/startDAS', {
       method: 'POST',
@@ -39,6 +40,25 @@ function startDAS() {
       console.error('Error:', error);
       // Handle errors
     });
+
+    // read the das from the application
+    console.log("read");
+    fetch('http://localhost:5050/readDAS', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Response from server:', data);
+        // Handle the response as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors
+    });    
   }
   
   // Function to stop the DAS
