@@ -1,3 +1,8 @@
+# Steps
+1. launch Kafka docker-compose image
+2. launch API-Server --> SERVER/app.py
+3. front API --> run.py 
+
 #### Real time traffic monitoring 
 
 **virtual environnement**
@@ -15,9 +20,6 @@
 **run application**
 `python run.py`
 
-**Virtual environnement version** 
-> NOT NEEDED
-> Flask-Leaflet needs python 3.11 or higher
 
 ## Web App Architecture
 

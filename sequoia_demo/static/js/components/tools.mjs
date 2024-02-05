@@ -2,6 +2,7 @@
 
 // Function to start the DAS
 function startDAS() {
+    console.log("start")
     fetch('http://localhost:5000/startDAS', {
       method: 'POST',
       headers: {
@@ -23,6 +24,7 @@ function startDAS() {
   
   // Function to stop the DAS
   function stopDAS() {
+    console.log("stop")
     fetch('http://localhost:5000/stopDAS', {
       method: 'POST',
       headers: {
