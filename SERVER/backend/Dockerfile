@@ -10,11 +10,15 @@ COPY ./backend /app
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
 
 # Define environment variable
 ENV NAME World
+ENV FLASK_APP app.py
+ENV FLASK_RUN_HOST 0.0.0.0
+ENV FLASK_RUN_PORT 5000
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+ENTRYPOINT ["flask", "run"]
+#CMD ["python", "app.py"]
