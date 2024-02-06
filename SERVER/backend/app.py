@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from InterrogatorProducer import InterrogatorProducer
 import time
@@ -32,6 +32,14 @@ def stop():
 @app.route("/status", methods=["GET"])
 def status():
     return {"interation": interrogator.current_interation}
+
+
+@app.route("/checkDAS", methods=["GET"])
+def check_das():
+    # Assuming you have a method in InterrogatorProducer 
+    # to check the DAS status
+    das_status = interrogator.check_das_status()
+    return jsonify({"das_status": das_status})
 
 
 if __name__ == '__main__':

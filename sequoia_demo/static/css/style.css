@@ -1,94 +1,234 @@
+/* GENERAL STYLES */
 body {
-    margin-bottom: 100px; /* Hauteur du footer */
+    margin-bottom: 100px;
     font-family: 'Roboto', sans-serif;
-    color: #333; /* Couleur du texte principale */
-    background-color: #f5f5f5; /* Couleur de fond principale */
+    color: #333;
+    background-color: #f5f5f5;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #004d40; /* Couleur du texte des titres */
+    color: #004d40;
 }
 
-.theme_sia {
-    background-color: rgba(255, 255, 255, 0.8); /* Couleur du fond avec transparence */
+.space {
+    margin: 2%;
 }
-.text_sia {
-    font-family: 'Roboto', sans-serif;
-    color: #333; /* Couleur du texte principale */
+/* LOGO */
+/* Ajoutez ces styles pour ajuster la taille du logo */
+.logo {
+    margin-right: 20px; /* Ajustez la marge à droite si nécessaire */
 }
+
+/* NAVIGATION STYLES */
 .navbar-brand {
-    color: #fff; /* Couleur du texte du logo */
+    color: #fff;
+    font-size: 1.5em; /* Adjust the font size */
+    margin-left: 20px; /* Add some margin to the left */
 }
 
 .navbar-nav .nav-link {
-    color: #fff; /* Couleur du texte des liens de navigation */
+    color: #fff;
 }
 
 .not_activate {
     display: none;
 }
 
-/* header, footer {
-    position: fixed;
-    width: 100%;
-    background-color: #388e3c; 
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-} */
-
-
+/* LAYOUT STYLES */
 body {
     margin: 0;
     padding: 0;
-    height: 100vh; /* 100% de la hauteur de la vue */
+    height: 100vh;
     overflow: hidden;
-    position: relative; /* Position relative pour que les éléments enfants soient positionnés par rapport à lui */
-  }
-  
-  header, footer {
+    position: relative;
+}
+
+header, footer {
     position: absolute;
     width: 100%;
     padding: 20px;
     text-align: center;
-  }
-  
-  header {
+}
+
+header {
     top: 0;
     z-index: 1;
-    border-bottom: 2px solid #2e7d32; /* Bordure inférieure de la barre de navigation */
+    border-bottom: 2px solid #2e7d32;
     padding: 0%;
-  }
-  
-  footer {
+}
+
+footer {
     bottom: 0;
-    border-top: 2px solid #2e7d32; /* Bordure inférieure de la barre de navigation */
-  }
-  
-  #map {
-    height: 100%; /* Utilise toute la hauteur disponible */
-    width: 100%; /* Utilise toute la largeur disponible */
+    border-top: 2px solid #2e7d32;
+}
+
+/* MAP STYLES */
+#map {
+    height: 100%;
+    width: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0; /* Assurez-vous que la carte est derrière les éléments header et footer */
-  }
-  
+    z-index: 0;
+}
 
-.menu{
-    position:static;
+/* LEAFLET STYLES */
+.leaflet-bar {
+    display: none !important;
+}
+
+/* MENU STYLES */
+.mycontainer{
+    padding: 0% !important;
+}
+
+.navbar{
+    padding:0.5rem;
+}
+
+.menu {
+    position: static;
     top: 20% !important;
-    left:2%;
-    right:0%;
-    overflow-y:hidden !important;
+    left: 2%;
+    right: 0%;
+    overflow-y: hidden !important;
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    
 }
 
-.space{
-    margin: 2%;
+/* SPECIFIC TO CHILD STYLES */
+.theme_sia {
+    background-color: rgba(255, 255, 255, 0.8);
 }
-  
-  
+
+.text_sia {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+/* DAS BUTTON STYLES */
+#powerButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#powerButton.active {
+    background-color: #e74c3c;
+}
+#readButton {
+    background-color: #a7a7a7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#readButton.active {
+    background-color: #009e42;
+}
+
+/* Ajoutez cette classe à vos boutons pour les cacher par défaut */
+.hidden {
+    visibility: hidden;
+  }  
+
+
+.navbar-toggler-icon {
+    display: none; /* Masquer l'icône du menu */
+}
+
+.toggle-button {
+    display: inline-block !important;
+}
+
+/* RESPONSIVE STYLES */
+@media (max-width: 768px) {
+    .logo {
+        width: 30%; /* Ajustez la largeur du logo pour les écrans plus petits */
+    }
+    
+    /* Ajoutez ces styles pour rendre le bouton ON/OFF visible sur un écran plus petit */
+    #powerButton {
+        display: inline-block;
+        margin-left: 10px; /* Ajoutez de la marge à gauche pour l'espacement */
+    }    
+
+/* Ajoutez ces styles pour le bouton ON/OFF */
+
+
+    /* .navbar-brand {
+        font-size: 1.2em;
+        margin-left: 10px;
+    }
+
+    #powerButton {
+        font-size: 12px;
+    }
+
+    .navbar-toggler {
+        position: static; 
+    }
+    
+    .navbar-nav {
+        flex-direction: row !important; 
+    }
+
+    .navbar-nav .nav-item {
+        margin-right: 10px; 
+    }
+
+    .navbar-collapse {
+        flex-basis: auto;
+    }     */
+}
+
+/* Ajoutez ces styles pour afficher le bouton ON/OFF sur de petits écrans */
+@media (max-width: 990px) {
+    .toggle-button {
+        display: inline-block !important;
+    }
+
+    .navbar-toggler-icon {
+        display: none !important;
+    }
+}
+
+
+/* Ajoutez ces styles pour le bouton ON/OFF */
+#powerButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#powerButton.active {
+    background-color: #e74c3c;
+}
+
+/* Ajoutez ces styles pour afficher le bouton ON/OFF sur de petits écrans */
+@media (max-width: 991px) {
+    #powerButton {
+        display: inline-block !important;
+    }
+}

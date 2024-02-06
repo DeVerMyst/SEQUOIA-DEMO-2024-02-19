@@ -7,15 +7,8 @@ import { decimateObject, startDAS, stopDAS } from "./components/tools.mjs"
   DAS
 ===============================================================
 */
-console.log("DAS main.js")
-$("button#startDAS").on("click", function() {
-    console.log("start DAS - main.js")
-    startDAS();
-})
-$("button#stopDAS").on("click", function() {
-    console.log("stop DAS - main.js")
-    stopDAS();
-})
+
+
 /*
 ===============================================================
   General
