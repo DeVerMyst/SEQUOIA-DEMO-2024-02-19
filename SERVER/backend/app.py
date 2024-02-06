@@ -29,6 +29,10 @@ def stop():
     interrogator.stop_stream()
     return {"status": "Stopped"}
 
+@app.route("/status", methods=["GET"])
+def status():
+    return {"interation": interrogator.current_interation}
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
