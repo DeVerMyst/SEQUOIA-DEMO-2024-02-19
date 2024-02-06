@@ -18,7 +18,7 @@ class InterrogatorProducer:
 
     def __init__(self) -> None:
         self.producer = KafkaProducer(
-            bootstrap_servers=["localhost:9094"],  # host.docker.internal
+            bootstrap_servers=["kafka:9092"],  #For localhost kafka use: localhost:9094
             value_serializer=lambda x: dumps(
                 {"array": x, "datetime": datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}
             ).encode("utf-8"),
@@ -34,7 +34,7 @@ class InterrogatorProducer:
                 print(f"The file {data_file} exists.")
             else:
                 # here
-                cwd = join(getcwd(), "SERVER", "backend")
+                cwd = join(getcwd(), "SERVER", "backend") # For running locally
                 data_file = join(cwd, "VM_data.h5")
                 print(f"The file {data_file} does not exist.")
         except Exception as e:
@@ -53,7 +53,7 @@ class InterrogatorProducer:
 
         while (
             self.run_flag
-            and self.current_interation < int(self.data.shape[1] / batch_size) - 40
+            and self.current_interation < int(self.data.shape[1] / batch_size)
         ):
             print(f"Interation {self.current_interation}")
             batch = self.data[
@@ -68,7 +68,7 @@ class InterrogatorProducer:
             self.current_interation += 1
 
             # restart the DAS to send the data from the begginer to keep the producer always working
-            if self.current_interation == int(self.data.shape[1] / batch_size) - 40:
+            if self.current_interation == int(self.data.shape[1] / batch_size):
                 self.current_interation = 0
 
     def start_stream(self):
