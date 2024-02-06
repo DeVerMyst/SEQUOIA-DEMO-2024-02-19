@@ -1,0 +1,46 @@
+// Define your Acornfile here, here is a simple example to get you started
+name: "SequoIA - Kafka"
+
+
+containers: {
+  kafka: {
+    image: "bitnami/kafka:3.6.1"
+    ports: {
+      publish: "9094/tcp"
+      expose: "9092/tcp"
+    }
+    dirs: {
+  			"/usr/src/kafka": "volume://kafka-data"
+    }
+    env: {
+      "KAFKA_CFG_NODE_ID": "0"
+      "KAFKA_CFG_PROCESS_ROLES": "controller,broker"
+      "KAFKA_CFG_CONTROLLER_QUORUM_VOTERS": "0@kafka:9093"
+      "KAFKA_CFG_LISTENERS": "PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://0.0.0.0:9094"
+      "KAFKA_CFG_ADVERTISED_LISTENERS": "PLAINTEXT://kafka:9092,EXTERNAL://k8s-c4c76446-096d91380334f4da.elb.us-east-2.amazonaws.com:32278" // need to be the IP/hostname of the server
+      "KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP": "CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+      "KAFKA_CFG_CONTROLLER_LISTENER_NAMES": "CONTROLLER"
+      "KAFKA_CFG_MESSAGE_MAX_BYTES": "20971520"
+    }
+  }
+
+  backend: {
+    build: {
+        context: "."
+        dockerfile: "./backend/Dockerfile"
+    }
+    ports: publish: "5000/http"
+  }
+
+  frontend: {
+    build: {
+        context: "."
+        dockerfile: "./front/Dockerfile"
+    }
+    ports: publish: "8080/http"
+  }
+}
+
+volumes: {
+    "kafka-data": {}
+}
