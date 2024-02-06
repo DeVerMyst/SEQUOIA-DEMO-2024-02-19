@@ -65,4 +65,18 @@ body{
     top: 200px;
     left: 90px;
 }
+
+.screen {
+    background-color: black;
+    position: absolute;
+    top: 84px;
+    left: 202px;
+    width: 221px;
+    height: 143px;
+    color: lime;
+    border: none;
+    text-align: end;
+    display: none;
+    overflow: hidden;
+}
   

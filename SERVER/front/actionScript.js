@@ -1,9 +1,11 @@
-const BASE_URL = 'http://127.0.0.1:5000/';//host.docker.internal
+const BASE_URL = 'https://demo-9c025a41.zvgz4d.on-acorn.io/';//host.docker.internal 
 var btnStart = document.getElementById("start");
 var lightGreen = document.getElementById("green-light");
 
 var btnStop = document.getElementById("stop");
 var lightRed = document.getElementById("red-light");
+var running = false;
+var lastInteration = -1;
 
 function turnLight(type) {
     var btnPrimary = document.getElementById(type);
@@ -23,6 +25,17 @@ function turnLight(type) {
     toastText.innerHTML = type == "start" ? "The interrogator started to producer DAS data into the Stream." : "The interrogator has stopped.";
     const toast = bootstrap.Toast.getOrCreateInstance(toastElement)
     toast.show();
+
+    //screen
+    const screen = document.getElementById("screen");
+    if (lastInteration == -1)
+        screen.value += type == 'start' ? "Running..." : "Stopped!";
+    else
+        screen.value += type == 'start' ? "\nRunning..." : "\nStopped!";
+    screen.scrollTop = screen.scrollHeight;
+    screen.style.display = "block";
+
+    running = type == "start";
 }
 
 function callAPI(endpoint) {
@@ -59,3 +72,26 @@ function shwoAlert() {
 
     appendAlert('It was not possible access the API!', 'danger');
 }
+
+setInterval(() => {
+    if (running) {
+    axios({
+        method: 'get',
+        url: BASE_URL + 'status',
+    })
+        .then((resp) => {
+            const currentInteration = resp.data.interation;
+            if (currentInteration != lastInteration) {
+                const screen = document.getElementById("screen");
+                screen.value += "\n Interation " + currentInteration;
+                screen.scrollTop = screen.scrollHeight;
+                lastInteration = currentInteration;
+            }
+        }).catch((error) => {
+            showAlert();
+            console.log(error);
+        });
+    }
+}, 1000);
+
+document.getElementById("screen").value = "";
