@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-
 <script type="text/javascript">
 
   // Passer les données au script principal (main.js)
@@ -26,6 +24,14 @@
   <div class="mb-4">
     <!-- ANTONY FOR DEMO ======= Remove buttons -->
     <button class="btn btn-danger mx-3 btn-sm" id="clear-button" type="button">Clear map</button>
+    <div class="row mb-2">
+      <div class="col">
+        <button class="btn btn-outline-secondary loadButton" type="button" id="submitDateTimeAnalysis">Submit</button>
+
+    <!-- Stop real time -->
+        <button class="btn btn-outline-secondary stopButton" style="display: none;" type="button" id="stopRealTime">Stop Real Time</button>
+      </div>
+    </div>
   </div>
 
   <div class="row input-group">
@@ -54,6 +60,146 @@
 
 
 </div>
+
+<div class="container menu-options" id="analysis-options">
+
+  <div class="row mb-2">
+    <div class="col">Data type:</div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <!-- Energy data -->
+      <input type="radio" class="btn-check" name="data-type" id="selectEnergy" value="energy" autocomplete="off" checked>
+      <label class="btn btn-outline-secondary btn-sm" for="selectEnergy">Energy</label>
+
+      <!-- Strain -->
+      <input type="radio" class="btn-check" name="data-type" id="selectStrain" value="strain" autocomplete="off">
+      <label class="btn btn-outline-secondary btn-sm" for="selectStrain">Strain</label>
+      
+      <input type="radio" class=" btn-check" name="data-type" id="selectDenoise" value="denoise" autocomplete="off">
+      <label class="btn btn-outline-secondary btn-sm" for="selectDenoise"  style="margin-bottom: 0px;">Denoise</label>
+
+      <!-- Vehicle counts -->
+      <input type="radio" class="btn-check" name="data-type" id="selectCounts" value="total_count" autocomplete="off">
+      <label class="btn btn-outline-secondary btn-sm" for="selectCounts">Vehicle counts</label>
+
+      <!-- Vehicle speed -->
+      <input type="radio" class="btn-check" name="data-type" id="selectSpeed" value="speed" autocomplete="off">
+      <label class="btn btn-outline-secondary btn-sm" for="selectSpeed">Vehicle speed</label>
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col">Display mode:</div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <!-- Static display -->
+      <input type="radio" class="btn-check" name="display-mode" id="selectStatic" value="static" autocomplete="off" checked>
+      <label class="btn btn-outline-secondary btn-sm" for="selectStatic">Fixed time</label>
+
+      <!-- Dynamic display -->
+      <input type="radio" class="btn-check" name="display-mode" id="selectDynamic" value="dynamic" autocomplete="off">
+      <label class="btn btn-outline-secondary btn-sm" for="selectDynamic">Variable time</label>
+
+      <!-- Real time display -->
+      <input type="radio" class="btn-check" name="display-mode" id="selectRealtime" value="realtime" autocomplete="off">
+      <label class="btn btn-outline-secondary btn-sm" for="selectRealtime">Real time</label>
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col">Select data range:</div>
+  </div>
+
+  <!-- Start time -->
+  <div class="row mb-1">
+    <div class="col input-group">
+      <span class="input-group-texte" style="width: 130px;">Start time</span>
+      <input type="datetime-local" id="startdatetimeanalysis" value="2021-12-22T21:31:04" step="1">
+    </div>
+  </div>
+
+  <!-- End time -->
+  <div class="row mb-1">
+    <div class="col input-group">
+      <span class="input-group-texte" style="width: 130px;">End time</span>
+      <input type="datetime-local" id="enddatetimeanalysis" value="2021-12-22T21:32:04" step="1" disabled>
+    </div>
+  </div>
+
+  <!-- Channel range -->
+  <div class="row mb-2">
+    <div class="col input-group">
+      <span class="input-group-text" style="width: 130px;">Channel range</span>
+      <input type="number" class="form-control" id="startchanalysis" value="750">
+      <input type="number" class="form-control" id="endchanalysis" value="1000">
+    </div>
+  </div>
+
+  <!-- Speed range -->
+  <div class="row mb-2">
+    <div class="col input-group">
+      <span class="input-group-textee" style="width: 130px; display: none;">Speed range <br>(Optional)
+        <span class="rounded-circle" data-toggle="tooltip" data-placement="top" title="Markers will be shown on the sensors where the speed is within the defined range.">
+          <i class="fas fa-info-circle" style="margin-top: 15px;"></i>
+        </span>
+      </span>
+      <input type="number" class="form-control" id="startspeedlysis" style="display: none;">
+      <input type="number" class="form-control" id="endspeedlysis" style="display: none;">
+    </div>
+  </div>
+  
+
+
+  <!-- Slider -->
+  <div class="slidecontainer">
+    <div class="row mb-2">
+      <div class="col" id="slide" style="display: none;">Slide to view data : </div>
+    </div>
+    <input type="range" class="slider" id="myRange" style="display: none;">
+    <p>Date & Time: <span id="demo"></span></p>
+  </div>
+
+  <!-- Submit data range -->
+  <div class="row mb-2">
+    <div class="col">
+      <button class="btn btn-outline-secondary loadButton" type="button" id="submitDateTimeAnalysis">Submit</button>
+
+  <!-- Stop real time -->
+      <button class="btn btn-outline-secondary stopButton" style="display: none;" type="button" id="stopRealTime">Stop Real Time</button>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row mb-2">
+    <div class="col">Choose time format before submit to plot : </div>
+  </div>
+  <div class="row mb-2 text-center">
+    <div class="col">
+      <input class="sw" id="timeFormat" type="checkbox" data-toggle="switchbutton" data-onlabel="UTC" data-offlabel="Local" data-onstyle="success" data-width="150">
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col">
+      <div id="analysisEnergyPanel"></div>
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col">
+      <div id="graph"></div>
+    </div>
+  </div>
+
+
+
+</div>
+<!-- End analysis options -->
 
 
 {% endblock %}

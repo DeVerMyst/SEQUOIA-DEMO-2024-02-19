@@ -56,7 +56,7 @@ function sleep(ms) {
 // Remove all plotly panels
 function purgePlots() {
     Plotly.purge("analysisEnergyPanel");
-    Plotly.purge("calibEnergyPanel");
+   // Plotly.purge("calibEnergyPanel");
 }
 
 // Stop the current animation
@@ -71,6 +71,7 @@ var oldTime;
 
 // Plot a waterfall (heatmap) plot - dynamic & real time mode
 function plotWaterfall(data, channels, target, zmin, zmax, time, dataType, displayMode) {
+    console.log("waterfall");
 
     switch (dataType) {
         case "speed":
@@ -228,13 +229,15 @@ function plotWaterfall(data, channels, target, zmin, zmax, time, dataType, displ
 
 // Plot time series - static mode
 function plotTimeSeries(data, channels, target, dataType) {
+    console.log("timeseries");
 
     var myPlot = document.getElementById('analysisEnergyPanel');
+    var plotExists = myPlot && myPlot.hasChildNodes();
 
     let y = [];
 
     for(let i = 0; i < data.length; i++) {
-        y.push(data[i][0]);
+        y.push(data[i]);
     }
 
     let params = [{
@@ -254,28 +257,31 @@ function plotTimeSeries(data, channels, target, dataType) {
         }
     }
 
-    purgePlots();
-    Plotly.newPlot(target, params, layout, modeBarOptions);
+    // Create or update the plot
+    if (plotExists) {
+        Plotly.update(target, params, [0]);
+    }else{
+        purgePlots();
+        Plotly.newPlot(target, params, layout, modeBarOptions);
+    }
 
     // Attach hover event listener
-    myPlot.on('plotly_hover', function (eventData) {
-        var sensor = eventData.points[0].x;
-        // show hover marker
-        return showMarker(sensor);
-    })
-
-
+    // myPlot.on('plotly_hover', function (eventData) {
+    //     var sensor = eventData.points[0].x;
+    //     // show hover marker
+    //     return showMarker(sensor);
+    // })
 }
 
 
 // Plot data on the map and slider
 async function plotMap(data, channels, options, times, displayMode, speedStart, speedEnd, dataType) {
     const Nt = getNt(data);
-    const sensors = JSON.parse(sessionStorage.getItem("sensors"));
+    //const sensors = JSON.parse(sessionStorage.getItem("sensors"));
     autoSlideFlag = false;
     
     // Clean-up first
-    await stopAnimation();
+  //  await stopAnimation();
     removeCable();
 
 
@@ -298,60 +304,59 @@ async function plotMap(data, channels, options, times, displayMode, speedStart, 
         let sliderIsDragging = false; // flag variable to indicate whether slider is being dragged
         let selectedTimeIndex = 0; // Variable to keep track of the current index in the times array
 
-        slider.addEventListener("mousedown", function() {
-            sliderIsDragging = true;
-            runAnimation = false;
-        });
+        // slider.addEventListener("mousedown", function() {
+        //     sliderIsDragging = true;
+        //     runAnimation = false;
+        // });
 
-        // Function to handle automatic sliding of the slider
-        async function autoSlide(currentIndex) {
-            autoSlideFlag = true; // Flag variable to control the animation
-            while (currentIndex < times.length && !sliderIsDragging && autoSlideFlag) {
-                let selected = times[currentIndex];
-                output.innerHTML = selected;
-                slider.value = new Date(selected).getTime(); // Update the slider position
-                currentIndex++;
-                timeOut = getTimeOut(times);
-                await sleep(timeOut);
-            }
+        // // Function to handle automatic sliding of the slider
+        // async function autoSlide(currentIndex) {
+        //     autoSlideFlag = true; // Flag variable to control the animation
+        //     while (currentIndex < times.length && !sliderIsDragging && autoSlideFlag) {
+        //         let selected = times[currentIndex];
+        //         output.innerHTML = selected;
+        //         slider.value = new Date(selected).getTime(); // Update the slider position
+        //         currentIndex++;
+        //         timeOut = getTimeOut(times);
+        //         await sleep(timeOut);
+        //     }
             
-        }   
-
+        // }   
     
-        slider.addEventListener("input", async function() {
+        // slider.addEventListener("input", async function() {
 
-            // Clear previous markers
-            clearMarkers();
+        //     // Clear previous markers
+        //     clearMarkers();
 
-            const selectedTime = new Date(parseInt(this.value)).toISOString();
-            output.innerHTML = selectedTime;
-            //await plotMap(data, channels, options, selectedTime, times); // call plotMap with selectedTime
-            if (selectedTime !== undefined) {
+        //     const selectedTime = new Date(parseInt(this.value)).toISOString();
+        //     output.innerHTML = selectedTime;
+        //     //await plotMap(data, channels, options, selectedTime, times); // call plotMap with selectedTime
+        //     if (selectedTime !== undefined) {
 
-                // Find the index of the selected time in the `times` array
-                selectedTimeIndex = times.findIndex(time => new Date(time).getTime() === new Date(selectedTime).getTime());
+        //         // Find the index of the selected time in the `times` array
+        //         selectedTimeIndex = times.findIndex(time => new Date(time).getTime() === new Date(selectedTime).getTime());
                 
-                // Plot the data on the map
-                let mapData = []
-                for (let i = 0; i < channels.length; i++) {
-                    const index = channels[i];
-                    const val = data[i][selectedTimeIndex];
-                    //selectedData.push(val);
-                    mapData.push([sensors[index].latLng.lat, sensors[index].latLng.lng, val]);
-                }
+        //         // Plot the data on the map
+        //         let mapData = []
+        //         for (let i = 0; i < channels.length; i++) {
+        //             const index = channels[i];
+        //             const val = data[i][selectedTimeIndex];
+        //             //selectedData.push(val);
+        //             mapData.push([sensors[index].latLng.lat, sensors[index].latLng.lng, val]);
+        //         }
 
-                addHotline(mapData, options);
+        //         addHotline(mapData, options);
 
-                if (dataType === "speed") {
-                    for (let j = 0; j < mapData.length; j++) {
-                        if (mapData[j][2]<= speedEnd && mapData[j][2] >= speedStart) {
-                        showPositionFixed(mapData[j][0], mapData[j][1], channels[j], mapData[j][2], selectedTime);
-                        }
-                    }
-                }
-            }
+        //         if (dataType === "speed") {
+        //             for (let j = 0; j < mapData.length; j++) {
+        //                 if (mapData[j][2]<= speedEnd && mapData[j][2] >= speedStart) {
+        //                 showPositionFixed(mapData[j][0], mapData[j][1], channels[j], mapData[j][2], selectedTime);
+        //                 }
+        //             }
+        //         }
+        //     }
 
-        });
+        // });
 
     
 
@@ -364,7 +369,6 @@ async function plotMap(data, channels, options, times, displayMode, speedStart, 
         slider.disabled = true;
         output.innerHTML = "none"
     }
-
     
     if (Nt == 1) {   // If only 1 time sample: static mode
         document.getElementById("demo").innerHTML = times[0];
@@ -372,19 +376,19 @@ async function plotMap(data, channels, options, times, displayMode, speedStart, 
         // Create a hotline
         for (let i = 0; i < channels.length; i++) {
             const index = channels[i];
-            const val = data[i][0];
+            const val = data[i];
             mapData.push([sensors[index].latLng.lat, sensors[index].latLng.lng, val]);
         }
         addHotline(mapData, options);
 
-        if (dataType === "speed") {
-            for (let j = 0; j < mapData.length; j++) {
-                if (mapData[j][2] <= speedEnd && mapData[j][2] >= speedStart) {
-                    showPositionFixed(mapData[j][0], mapData[j][1], channels[j], mapData[j][2], times[0]);
-                }
+        // if (dataType === "speed") {
+        //     for (let j = 0; j < mapData.length; j++) {
+        //         if (mapData[j][2] <= speedEnd && mapData[j][2] >= speedStart) {
+        //             showPositionFixed(mapData[j][0], mapData[j][1], channels[j], mapData[j][2], times[0]);
+        //         }
             
-            }
-        }   
+        //     }
+        // }   
     } else if (sliderIsDragging === false) {   // Else: dynamic mode
         runAnimation = true;
         // Transpose the data
@@ -427,7 +431,7 @@ async function animateHotline(data, channels, options, selectedTimeIndex, slider
             if (dataType === "speed") {
                 for (let j = 0; j < lines[i].length; j++) {
                     if (lines[i][j][2] <= speedEnd && lines[i][j][2] >= speedStart) {
-                        showPosition(lines[i][j][0], lines[i][j][1], channels[j], lines[i][j][2]);
+                       showPosition(lines[i][j][0], lines[i][j][1], channels[j], lines[i][j][2]); // show red marker
                     }
                 
                 }

@@ -148,6 +148,8 @@ map.on('zoomend', function() {
     if(newZoom < 19)
     {
         var result_copy = decimateObject(result, .5*(19-newZoom)**2);
+        console.log("number: " + .5*(19-newZoom)**2 + " result");
+        console.log(result_copy);
         updateFeatures(result_copy);
         console.log(isCableChecked)
         // toggleMarkers(checked);
@@ -321,7 +323,7 @@ $("#selectRealtime").on("click", function() {
 })
 
 // Submit data range for analysis
-$("#submitDateTimeAnalysis").on("click", function() { 
+$("#submitDateTimeAnalysi").on("click", function() { 
 
     const dataType = $("input[name='data-type']:checked").val();
     const displayMode = $("input[name='display-mode']:checked").val();
@@ -372,6 +374,63 @@ $("#submitDateTimeAnalysis").on("click", function() {
     const target = "analysisEnergyPanel";
     console.log("\n analysis param: ",bucket,timeStart,timeEnd,chStart,chEnd,speedStart,speedEnd,target,displayMode)
     fetchDisplay(dataType, timeStart, timeEnd, chStart, chEnd, speedStart, speedEnd, target, true, displayMode, bucket);
+
+})
+
+// test implement this function wiht DAS from kafka
+$("#submitDateTimeAnalysis").on("click", function() { 
+
+    const dataType = "speed";
+    const displayMode = "realtime";
+    var currentDatetime = new Date();
+    let timeStart = currentDatetime.toISOString();
+    currentDatetime.setSeconds(currentDatetime.getSeconds()+20)
+    let timeEnd = currentDatetime.toISOString();
+    let chStart = 0;
+    let chEnd = 1983;
+    let speedStart = 30;
+    let speedEnd = 110;
+    const chMax = 1984;
+
+    clearMarkers();
+    removeCable();
+    removeHotline();
+    removeMarkers();
+    stopAnimation();
+    //clearDateTime();
+
+    if (isNaN(chStart) || (chStart < 0)) {
+        chStart = 0;
+    }
+    if (isNaN(chEnd) || (chEnd >= chMax)) {
+        chEnd = chMax - 1;
+    }
+    if (chStart >= chMax) {
+        chStart = chMax - 1;
+    }
+    if (chStart > chEnd) {
+        chEnd = chStart;
+    }
+
+    if (displayMode === "static") {
+        timeEnd = timeStart;
+    }
+
+    if (displayMode === "dynamic") {
+        $("#slide").show();
+        $("#myRange").show();
+    }
+
+    if (displayMode === "realtime") {
+        timeStart = null;
+        timeEnd = null;
+        $(this).prop("disabled", true);  // to prevent user submit again once he clicked the real time button,
+                                             // if not the query will be executed again (two times or more)
+    }
+
+    const target = "analysisEnergyPanel";
+    console.log("\n analysis param: ",bucket,timeStart,timeEnd,chStart,chEnd,speedStart,speedEnd,target,displayMode)
+    fetchDisplay();
 
 })
 
