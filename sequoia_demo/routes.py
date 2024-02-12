@@ -2,18 +2,19 @@ from flask import render_template, jsonify
 from sequoia_demo import app
 from sequoia_demo.components.logging_utils import logging
 from sequoia_demo.components.sensors_utils import config_sensors
-from sequoia_demo.components.kafka_utils import read_kafka, init_socketio
+from sequoia_demo.components.kafka_utils import start_stream, init_socketio, stop_stream
 from flask_socketio import SocketIO
 
 import config as config
 import json
 
-# Initialisation de Flask-SocketIO
-socketio = SocketIO(app)
-init_socketio(socketio)  # Initialisez le socketio dans kafka_utils.py
-
 # kafka host
 host = config.KAFKA_HOST
+
+# Initialisation de Flask-SocketIO
+socketio = SocketIO(app)
+init_socketio(socketio, host)  # Initialisez le socketio dans kafka_utils.py
+
 
 # Logger handle
 logger = logging.getLogger(__name__)
@@ -43,21 +44,23 @@ def get_sensor_data():
 
 @app.route("/readDAS", methods=["POST"])
 def readDAS():
-    print("="*50)
-    print("# [admin] routes read data")
-    print("="*50)
+    # print("="*50)
+    # print("# [admin] routes read data")
+    # print("="*50)
 
-    # # Exécutez votre script Python pour lire les données
-    # process = read_kafka(host)
-    # result = process.stdout
-    # print(result)
-    # # Vous pouvez retourner des données au client si nécessaire
-    # return {"status": "Started", "result": result}
+    # Exécutez votre script Python pour lire les données
+    #process = read_kafka(host)
+    #result = process.stdout
+    #print(result)
+    # Vous pouvez retourner des données au client si nécessaire
+    start_stream()
+    return {"status": "Started"}
 
 
 @app.route("/dontreadDAS", methods=["POST"])
 def dontreadDAS():
     print("# [admin] routes dont read data")
+    stop_stream()
     # Vous pouvez retourner des données au client si nécessaire
     return {"status": "nothing", "result": 200}
 
