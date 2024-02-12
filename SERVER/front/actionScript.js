@@ -1,4 +1,4 @@
-const BASE_URL = 'https://demo-9c025a41.zvgz4d.on-acorn.io/';//host.docker.internal 
+const BASE_URL = 'http://127.0.0.1:5000/';//host.docker.internal 
 var btnStart = document.getElementById("start");
 var lightGreen = document.getElementById("green-light");
 
