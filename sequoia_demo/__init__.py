@@ -3,7 +3,9 @@ import config as config
 from flask import Flask
 
 
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 # Load the handle for monitoring
 log_file_path = config.LOG_PATH
