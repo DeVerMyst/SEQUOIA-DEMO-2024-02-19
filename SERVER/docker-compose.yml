@@ -72,6 +72,27 @@ services:
       # Message size and memory heap settings
       - KAFKA_CFG_MESSAGE_MAX_BYTES=209715200
       - KAFKA_HEAP_OPTS=-Xmx2048m -Xms1024m
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app/backend
+    depends_on:
+      - kafka
+  
+  frontend:
+    build:
+      context: .
+      dockerfile: front/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./front:/app/front
+
 volumes:
   kafka_data:
     driver: local

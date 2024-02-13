@@ -20,27 +20,35 @@ SERVER
 ```
 
 
-**Danilo read me**
-There are three applications: Kafka-broker, backend and front-end. The first program to run is the broker, it should be running when the backend start, once that
-the back-end process will connect with the broker.
+**Danilo - Run by containers**
 
-1 - Start the broker:
-Acces the folder with the file "docker-compose.yml" and start the compose:
+1 - Start the docker compose:
+To run the interrogator simulator and kafka broker in containers go to the folder /SERVER and start the compose:
 
-> docker compose up
+```
+docker compose up
+```
 
-2 - Start the backend application:
-Access the "backend" unpacked folder and install the requirements:
+It should start the kafka broker, the backend and frontend process of the interrogator simulator.
+To access the interrogator application go to: http://localhost:8080/interrogator.html
 
-> pip install -r requirements.txt
+2 - Start the demo:
 
-Now, start the flask server there:
+Go to the main folder of the repository and start the application in a the virtual env:
 
-> flask run
+```
+source .flask_app/bin/activate
+python run.py
+```
 
-Check is the terminal shows the message "Running on http://127.0.0.1:5000".
+After that, open the URL: http://127.0.0.1:5050
+The demo should open.
 
-2 - Access the front-end page:
-Access the folder "front" and open the file "interrogator.html" with a browser.
+3 - Start the Interrogator simulator:
 
-Hit the button "Start" or "Stop" to start or stop the stream. After start you should see the interations logs in the backend terminal.
+Click on the "Start" button in the intorrogator app.
+
+4 - Start real-time:
+
+Click on "Start Real-time" button and wait some seconds. The map should plot the DAS data.
+Also the terminal running the demo should print the DAS data comming from stream.

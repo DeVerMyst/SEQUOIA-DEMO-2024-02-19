@@ -20,7 +20,7 @@ class InterrogatorProducer:
 
     def __init__(self) -> None:
         self.producer = KafkaProducer(
-            bootstrap_servers=["localhost:9094"],  #For localhost kafka use: localhost:9094
+            bootstrap_servers=["kafka:9092"],  #For localhost kafka use: localhost:9094
             value_serializer=lambda x: dumps(x).encode("utf-8"),
             max_request_size=209715200,
             buffer_memory=209715200,

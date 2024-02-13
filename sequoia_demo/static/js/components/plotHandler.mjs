@@ -277,7 +277,7 @@ function plotTimeSeries(data, channels, target, dataType) {
 
 // Plot data on the map and slider
 async function plotMap(data, channels, options, times, displayMode, speedStart, speedEnd, dataType) {
-    const Nt = getNt(data);
+    const Nt = 1;//getNt(data);
     //const sensors = JSON.parse(sessionStorage.getItem("sensors"));
     autoSlideFlag = false;
     

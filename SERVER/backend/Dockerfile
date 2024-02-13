@@ -14,7 +14,6 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Define environment variable
-ENV NAME World
 ENV FLASK_APP app.py
 ENV FLASK_RUN_HOST 0.0.0.0
 ENV FLASK_RUN_PORT 5000
