@@ -1,3 +1,5 @@
+# sequoia_demo/components/kafka_utils.py
+
 from sequoia_demo.components.logging_utils import logging
 import threading
 from json import loads

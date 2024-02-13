@@ -6,3 +6,4 @@ tmp*
 *.h5
 *.bin
 .backend
+.frontend
