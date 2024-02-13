@@ -25,6 +25,9 @@ else {
 var dinamicList = [];
 var dinamicTime = [];
 
+// Control if the data will be show on the map
+var showMap = false;
+
 const org = "sequoia"
 const token = "zX9rO09QluTYPeRM9X8l2M4P1qZOnG3c_OSxXsuhyEotyz04hhkmhjIHOhSaLoLQ-MypdhZigvXhTYEzd5Rfdg=="
 
@@ -200,17 +203,11 @@ function preparePlot() {
     const displayMode = "realtime";
     let chStart = 0;
     const Nch = 1984;
-    const showMap = true;
 
     let channels = []
     for (let i = 0; i < Nch; i++) {
         channels.push(i + chStart);
     }
-
-    console.log("\n Hi Query successful");
-
-    $(".loadButton").html("Submit").removeClass("btn-warning").addClass("btn-outline-secondary");
-
 
     const Nt = 1;//getNt(data);
     console.log("Nt :", Nt);
@@ -230,19 +227,18 @@ function preparePlot() {
                 weight: 8,
                 min: zmin,
                 max: zmax,
-                /*palette: {
-                    0.0: "rgb(178, 24, 43)",
-                    0.2: "rgb(214, 96, 77)",
-                    0.4: "rgb(244, 165, 130)",
-                    0.6: "rgb(146, 197, 222)",
-                    0.8: "rgb(67, 147, 195)",
-                    1.0: "rgb(33, 102, 172)",
-                }*/
                 palette: {
-                    0.0: "blue",
-                    0.5: "white",
-                    1.0: "red",
+                    0.0: "rgb(19,56,190)",
+                    0.25: "rgb(255,255,153)",
+                    0.5: "rgb(255,204,51)",
+                    0.75: "rgb(238,102,0)",
+                    1.0: "rgb(153,0,0)",
                 }
+                // palette: {
+                //     0.0: "blue",
+                //     0.5: "white",
+                //     1.0: "red",
+                // }
             };
             break;
 
@@ -321,6 +317,9 @@ function preparePlot() {
                 let timesUTC = dinamicTime.shift();
                 plotMap(currentData, channels, hl_options, timesUTC, displayMode, speedStart, speedEnd, dataType);
                 //getTimeOut(timesUTC);
+            }else if (dinamicList.length > 30) {
+                dinamicList.splice(0, 10)
+                dinamicTime.splice(0, 10);
             }
             
         }
@@ -368,6 +367,10 @@ function detectStopRealtime() {
     }
 }
 
+function setShowMap(value) {
+    showMap = value;
+}
 
 
-export { fetchDisplay, transpose, getNt, stopQuery, detectStopRealtime };
+
+export { fetchDisplay, transpose, getNt, stopQuery, detectStopRealtime, setShowMap };

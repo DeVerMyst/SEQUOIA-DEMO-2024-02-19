@@ -1,5 +1,5 @@
 import { map, addCable, toggleCable, toggleMarkers, updateFeatures, createFeatures, removeCable, removeHotline, removeMarkers, toggleSatellite, clearMarkers } from "./components/mapHandler.mjs"
-import { detectStopRealtime, fetchDisplay, stopQuery } from "./components/dataHandler.mjs"
+import { detectStopRealtime, fetchDisplay, stopQuery, setShowMap } from "./components/dataHandler.mjs"
 import { stopAnimation, getTimeOut, clearDateTime } from "./components/plotHandler.mjs";
 import { decimateObject, startDAS, stopDAS } from "./components/tools.mjs"
 /*
@@ -41,7 +41,7 @@ $("button#clear-button").on("click", function() {
     removeHotline();
     removeMarkers();
     stopAnimation();
-    clearDateTime();
+   // clearDateTime();
     
     // ANTONY FOR DEMO ======= clear map --> addCable
     // addCable(arrayCoordinates);
@@ -53,6 +53,9 @@ $("button#clear-button").on("click", function() {
   Setup
 ===============================================================
 */
+
+// As soon the page load, we start to read the sockets without show to the user
+fetchDisplay();
 
 // Fix for Bootstrap custom file input
 $(".custom-file-input").on("change", function(e) {
@@ -380,57 +383,68 @@ $("#submitDateTimeAnalysi").on("click", function() {
 // test implement this function wiht DAS from kafka
 $("#submitDateTimeAnalysis").on("click", function() { 
 
-    const dataType = "speed";
-    const displayMode = "realtime";
-    var currentDatetime = new Date();
-    let timeStart = currentDatetime.toISOString();
-    currentDatetime.setSeconds(currentDatetime.getSeconds()+20)
-    let timeEnd = currentDatetime.toISOString();
-    let chStart = 0;
-    let chEnd = 1983;
-    let speedStart = 30;
-    let speedEnd = 110;
-    const chMax = 1984;
+    if ($("#submitDateTimeAnalysis").text() == " Start Real-time") {
 
-    clearMarkers();
-    removeCable();
-    removeHotline();
-    removeMarkers();
-    stopAnimation();
-    //clearDateTime();
+        // change button text to stop real time
+        document.getElementById("submitDateTimeAnalysis").innerHTML = "<i class='fa fa-pause'></i> Stop Real-time" ;
 
-    if (isNaN(chStart) || (chStart < 0)) {
-        chStart = 0;
-    }
-    if (isNaN(chEnd) || (chEnd >= chMax)) {
-        chEnd = chMax - 1;
-    }
-    if (chStart >= chMax) {
-        chStart = chMax - 1;
-    }
-    if (chStart > chEnd) {
-        chEnd = chStart;
-    }
+        const dataType = "speed";
+        const displayMode = "realtime";
+        var currentDatetime = new Date();
+        let timeStart = currentDatetime.toISOString();
+        currentDatetime.setSeconds(currentDatetime.getSeconds()+20)
+        let timeEnd = currentDatetime.toISOString();
+        let chStart = 0;
+        let chEnd = 1983;
+        let speedStart = 30;
+        let speedEnd = 110;
+        const chMax = 1984;
 
-    if (displayMode === "static") {
-        timeEnd = timeStart;
-    }
+        clearMarkers();
+        removeCable();
+        removeHotline();
+        removeMarkers();
+        stopAnimation();
+        //clearDateTime();
 
-    if (displayMode === "dynamic") {
-        $("#slide").show();
-        $("#myRange").show();
-    }
+        if (isNaN(chStart) || (chStart < 0)) {
+            chStart = 0;
+        }
+        if (isNaN(chEnd) || (chEnd >= chMax)) {
+            chEnd = chMax - 1;
+        }
+        if (chStart >= chMax) {
+            chStart = chMax - 1;
+        }
+        if (chStart > chEnd) {
+            chEnd = chStart;
+        }
 
-    if (displayMode === "realtime") {
-        timeStart = null;
-        timeEnd = null;
-        $(this).prop("disabled", true);  // to prevent user submit again once he clicked the real time button,
-                                             // if not the query will be executed again (two times or more)
-    }
+        if (displayMode === "static") {
+            timeEnd = timeStart;
+        }
 
-    const target = "analysisEnergyPanel";
-    console.log("\n analysis param: ",bucket,timeStart,timeEnd,chStart,chEnd,speedStart,speedEnd,target,displayMode)
-    fetchDisplay();
+        if (displayMode === "dynamic") {
+            $("#slide").show();
+            $("#myRange").show();
+        }
+
+        if (displayMode === "realtime") {
+            timeStart = null;
+            timeEnd = null;
+        }
+
+        const target = "analysisEnergyPanel";
+        console.log("\n analysis param: ",bucket,timeStart,timeEnd,chStart,chEnd,speedStart,speedEnd,target,displayMode)
+
+        setShowMap(true);
+        
+    }else{
+        console.log("Stopped");
+        // change button text to start real time
+        document.getElementById("submitDateTimeAnalysis").innerHTML = "<i class='fa fa-play'></i> Start Real-time" ;
+        setShowMap(false);
+    }
 
 })
 

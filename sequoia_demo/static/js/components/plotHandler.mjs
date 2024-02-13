@@ -5,6 +5,7 @@ var runAnimation = false;
 let autoSlideFlag;
 let timeOut;
 
+
 // Plotly layout options
 var layout = {
     autosize: false,
@@ -290,16 +291,6 @@ async function plotMap(data, channels, options, times, displayMode, speedStart, 
         const minTime = new Date(times[0]);  // get the min time value as a date object
         const maxTime = new Date(times[times.length - 1]);  // get the max time value as a date object
 
-        // set the min, max for the slider
-        var slider = document.getElementById("myRange");
-        slider.min = minTime.getTime();
-        slider.max = maxTime.getTime();
-
-        // set the step value to the difference between consecutive values in the times array 
-        slider.step = (new Date(times[1]).getTime() - new Date(times[0]).getTime()).toString();
-
-        // update the value display under the slider when the slider is moved
-        var output = document.getElementById("demo");
 
         let sliderIsDragging = false; // flag variable to indicate whether slider is being dragged
         let selectedTimeIndex = 0; // Variable to keep track of the current index in the times array
@@ -366,12 +357,11 @@ async function plotMap(data, channels, options, times, displayMode, speedStart, 
         slider.disabled = false;
         output.innerHTML = minTime.toUTCString();
     } else if (displayMode === "realtime"){ 
-        slider.disabled = true;
-        output.innerHTML = "none"
+        // slider.disabled = true;
+        // output.innerHTML = "none"
     }
     
     if (Nt == 1) {   // If only 1 time sample: static mode
-        document.getElementById("demo").innerHTML = times[0];
         let mapData = []
         // Create a hotline
         for (let i = 0; i < channels.length; i++) {

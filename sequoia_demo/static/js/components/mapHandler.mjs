@@ -138,7 +138,7 @@ function addCable(data) {
     }
     cableLayer = L.polyline(data, {color: "blue"}).addTo(map);
     let div = $("#show-cable").parent();
-    $(div).removeClass("btn-light off").addClass("btn-success");
+    $(div).removeClass("btn-light off");
     $("#show-cable").prop("checked", true);
 }
 

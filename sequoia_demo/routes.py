@@ -14,6 +14,7 @@ host = config.KAFKA_HOST
 # Initialisation de Flask-SocketIO
 socketio = SocketIO(app)
 init_socketio(socketio, host)  # Initialisez le socketio dans kafka_utils.py
+start_stream()
 
 
 # Logger handle

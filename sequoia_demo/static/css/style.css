@@ -60,6 +60,7 @@ header {
 footer {
     bottom: 0;
     border-top: 2px solid #2e7d32;
+    padding: 10px;
 }
 
 /* MAP STYLES */
@@ -231,4 +232,19 @@ footer {
     #powerButton {
         display: inline-block !important;
     }
+}
+
+.control-painel {
+    margin-left: auto;
+    text-align: left;
+    margin-right: 20px;
+}
+
+.settings-painel {
+    margin-right: auto;
+    text-align: left;
+}
+
+.settings-buttons {
+    display: flex;
 }
