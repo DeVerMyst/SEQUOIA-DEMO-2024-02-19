@@ -4,3 +4,5 @@ __pycache__
 app.log
 tmp*
 *.h5
+*.bin
+.backend
